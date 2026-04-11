@@ -13,7 +13,3 @@ use = "Lil-Dank/lazygit"
 rev = "8c4086c"
 hash = "85316b5e9abeae2531d3e5d02a094381"
 
-[[flavor.deps]]
-use = "marcosvnmelo/kanagawa-dragon"
-rev = "b9541e8"
-hash = "dc840cf225dbf6f0257617403ad43d8b"
