@@ -1,0 +1,36 @@
+[mgr]
+show_hidden = true
+
+[opener]
+edit = [
+    { run = 'nvim %s', block = true, for = "unix" },
+]
+
+extract = [
+    { run = 'ya pub extract --list %s', desc = "Extract here", for = "unix" },
+]
+
+open_gui = [
+    { run = 'xdg-open %s', orphan = true, desc = "Open in default app", for = "unix" },
+]
+
+# Fixed spelling here!
+dolphin = [
+    { run = 'dolphin %s', orphan = true, desc = "Open in Dolphin", for = "unix" }
+]
+
+[open]
+rules = [
+    { url = "*/", use = [ "edit", "dolphin" ] },
+    { url = "*.{zip,rar,7z,tar,gz,xz,zst,bz2}", use = [ "extract" ] },
+    { url = "*.[sS][tT][pP]", use = [ "open_gui" ] },
+    { url = "*.[sS][tT][eE][pP]", use = [ "open_gui" ] },
+    { url = "*.[sS][tT][lL]", use = [ "open_gui" ] },
+    { mime = "text/*", use = [ "edit", "open_gui" ] },
+    { mime = "application/json", use = [ "edit", "open_gui" ] },
+    { mime = "inode/x-empty", use = [ "edit", "open_gui" ] },
+    { mime = "image/*", use = [ "open_gui", "edit" ] },
+    { mime = "video/*", use = [ "open_gui", "edit" ] },
+    { mime = "audio/*", use = [ "open_gui", "edit" ] },
+    { url = "*", use = [ "open_gui", "edit" ] }
+]
