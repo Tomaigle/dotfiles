@@ -1,0 +1,15 @@
+[[mgr.prepend_keymap]]
+on = [ "c", "a", "a" ]
+run = "plugin compress"
+desc = "Archive selected files"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "a", "p" ]
+run = "plugin compress --args=p"
+desc = "Archive selected files (password)"
+
+# --- LAZYGIT PLUGIN ---
+[[mgr.prepend_keymap]]
+on = [ "g", "g" ]
+run = "plugin lazygit"
+desc = "Run lazygit"
