@@ -16,6 +16,17 @@ config.set_environment_variables = {
 
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1500 }
 
+wezterm.on("update-status", function(window, pane)
+	local workspace = window:active_workspace()
+	local color = "#c4746e" -- A soft red from Kanagawa Dragon palette
+
+	window:set_right_status(wezterm.format({
+		{ Foreground = { Color = color } },
+		{ Attribute = { Intensity = "Bold" } },
+		{ Text = "    " .. workspace .. "  " },
+	}))
+end)
+
 config.keys = {
 	{ key = "v", mods = "LEADER", action = wezterm.action.SplitPane({ direction = "Right", size = { Percent = 50 } }) },
 	{ key = "n", mods = "LEADER", action = wezterm.action.SplitPane({ direction = "Down", size = { Percent = 50 } }) },
@@ -56,6 +67,6 @@ config.font = wezterm.font("JetBrains Mono")
 config.font_size = 12.0
 
 config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 
 return config
