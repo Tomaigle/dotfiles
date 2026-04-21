@@ -6,4 +6,5 @@ vim.g.root_spec = {
   "lsp",
   "cwd",
 }
+vim.opt.shell = "fish"
 vim.g.lazyvim_python_lsp = "basedpyright"

@@ -23,7 +23,7 @@ vim.keymap.set("n", "<leader>r", function()
   elseif ft == "prolog" then
     cmd = "swipl " .. file
   elseif ft == "haskell" then
-    cmd = string.format("ghc -dynamic '%s' -o '%s' && ./'%s'", file, file_no_ext, file_no_ext)
+    cmd = string.format("runghc '%s'", file)
   elseif ft == "asm" then
     cmd = string.format(
       "nasm -f elf64 '%s' -o '%s.o' && ld '%s.o' -o '%s.out' && ./'%s.out'",
