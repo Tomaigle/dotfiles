@@ -8,3 +8,5 @@ vim.g.root_spec = {
 }
 vim.opt.shell = "fish"
 vim.g.lazyvim_python_lsp = "basedpyright"
+vim.opt.spelllang = { "en", "pl" }
+vim.opt.spell = true

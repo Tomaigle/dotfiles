@@ -54,7 +54,8 @@ abbr -a ping "ping -c 10"
 abbr -a less "less -R"
 abbr -a cls clear
 abbr -a cat bat
-abbr -a ls eza
+abbr -a ls "eza -a"
+abbr -a la "eza -la"
 
 abbr -a home "cd ~"
 abbr -a cd.. "cd .."
@@ -89,4 +90,5 @@ end
 
 zoxide init --cmd cd fish | source
 
-set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/bartek/.ghcup/bin $PATH # ghcup-env
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME
+set -gx PATH $HOME/.cabal/bin /home/bartek/.ghcup/bin $PATH # ghcup-env

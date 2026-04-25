@@ -37,8 +37,6 @@ vim.keymap.set("n", "<leader>r", function()
     vim.notify("No runner for filetype: " .. ft, vim.log.levels.WARN)
     return
   end
-
-  vim.cmd("botright 10split | term " .. cmd)
-
+  vim.cmd("botright 20split | term " .. cmd)
   vim.cmd("startinsert")
 end, { desc = "Run Code" })
