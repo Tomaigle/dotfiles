@@ -3,7 +3,7 @@ show_hidden = true
 
 [opener]
 edit = [
-    { run = 'nvim %s', block = true, for = "unix" },
+    { run = 'wezterm cli spawn -- nvim "$@"', block = true, for = "unix" },
 ]
 
 extract = [
@@ -14,7 +14,6 @@ open_gui = [
     { run = 'xdg-open %s', orphan = true, desc = "Open in default app", for = "unix" },
 ]
 
-# Fixed spelling here!
 dolphin = [
     { run = 'dolphin %s', orphan = true, desc = "Open in Dolphin", for = "unix" }
 ]
