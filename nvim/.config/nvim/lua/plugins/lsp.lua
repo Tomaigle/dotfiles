@@ -13,6 +13,7 @@ return {
             },
           },
         },
+        hls = { enabled = false },
       },
     },
   },
