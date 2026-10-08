@@ -1,0 +1,20 @@
+{
+  "CMake Standard C++ Project": {
+    "prefix": "cmake_init",
+    "body": [
+      "cmake_minimum_required(VERSION ${1:3.25})",
+      "project(${2:cpp_demo} CXX)",
+      "",
+      "set(CMAKE_CXX_STANDARD ${3:20})",
+      "set(CMAKE_CXX_STANDARD_REQUIRED ON)",
+      "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)",
+      "",
+      "file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)",
+      "",
+      "add_executable(\\${PROJECT_NAME} \\${SOURCES})",
+      "target_include_directories(\\${PROJECT_NAME} PRIVATE ${4:include})",
+      "$0"
+    ],
+    "description": "Standard C++ executable boilerplate"
+  }
+}
