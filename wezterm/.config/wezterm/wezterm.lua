@@ -63,7 +63,7 @@ config.enable_tab_bar = true
 
 config.window_decorations = "TITLE | RESIZE"
 
-config.font = wezterm.font("JetBrains Mono")
+config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
 config.font_size = 12.0
 
 config.use_fancy_tab_bar = false
