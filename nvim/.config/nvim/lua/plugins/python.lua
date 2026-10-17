@@ -40,15 +40,6 @@ return {
         end,
         desc = "Debug Test Class",
       },
-      {
-        "<leader>r",
-        function()
-          local file = vim.fn.expand("%:p")
-          Snacks.terminal.open("python3 " .. vim.fn.shellescape(file))
-        end,
-        ft = "python",
-        desc = "Run Current Python File",
-      },
     },
   },
 }
