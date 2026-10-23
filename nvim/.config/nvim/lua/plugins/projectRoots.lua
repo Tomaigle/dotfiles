@@ -6,6 +6,7 @@ return {
         sources = {
           projects = {
             dev = { "~/Coding", "~/projects", "~/Studia" },
+            max_depth = 4,
             patterns = {
               ".git",
               "CMakeLists.txt",
