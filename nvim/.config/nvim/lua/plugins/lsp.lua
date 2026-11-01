@@ -1,3 +1,5 @@
+local wrap = vim.fn.expand("~/.local/bin/ros-lsp")
+
 return {
   "neovim/nvim-lspconfig",
   opts = {
@@ -5,35 +7,15 @@ return {
       clangd = {
         mason = false,
         cmd = {
-          vim.fn.expand("~/.local/bin/ros-lsp"),
+          wrap,
           "clangd",
           "--background-index",
-          "--header-insertion=never",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=llvm",
         },
-      },
-      basedpyright = {
-        mason = false,
-        cmd = {
-          vim.fn.expand("~/.local/bin/ros-lsp"),
-          "basedpyright-langserver",
-          "--stdio",
-        },
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "standard",
-              diagnosticSeverityOverrides = {
-                reportUnknownMemberType = "none",
-                reportUnknownArgumentType = "none",
-                reportUnknownVariableType = "none",
-                reportAny = "none",
-                reportUnusedCallResult = "none",
-              },
-            },
-          },
-        },
-      },
-      clangd = {
         keys = {
           {
             "<leader>ch",
@@ -65,6 +47,25 @@ return {
               vim.notify("No counterpart found for " .. vim.fn.expand("%:t"))
             end,
             desc = "Switch Source/Header (C/C++)",
+          },
+        },
+      },
+      basedpyright = {
+        mason = false,
+        cmd = { wrap, "basedpyright-langserver", "--stdio" },
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
+              diagnosticSeverityOverrides = {
+                reportUnknownMemberType = "none",
+                reportUnknownArgumentType = "none",
+                reportUnknownVariableType = "none",
+                reportAny = "none",
+                reportUnusedCallResult = "none",
+                reportPrivateImportUsage = "none",
+              },
+            },
           },
         },
       },
