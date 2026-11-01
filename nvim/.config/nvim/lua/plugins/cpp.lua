@@ -50,7 +50,7 @@ return {
         map("<leader>cb", "<cmd>CMakeBuild<cr>", "CMake: Build Target")
         map("<leader>cr", "<cmd>CMakeRun<cr>", "CMake: Run Executable")
         map("<leader>cd", "<cmd>CMakeDebug<cr>", "CMake: Debug Target")
-        map("<leader>cs", "<cmd>CMakeSelectBuildTarget<cr>", "CMake: Select Target")
+        map("<leader>cv", "<cmd>CMakeSelectBuildTarget<cr>", "CMake: Select Target")
         map("<leader>ct", "<cmd>CMakeSelectBuildType<cr>", "CMake: Select Build Type")
       end,
     })
