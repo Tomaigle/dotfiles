@@ -2,7 +2,22 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      clangd = {
+        mason = false,
+        cmd = {
+          vim.fn.expand("~/.local/bin/ros-lsp"),
+          "clangd",
+          "--background-index",
+          "--header-insertion=never",
+        },
+      },
       basedpyright = {
+        mason = false,
+        cmd = {
+          vim.fn.expand("~/.local/bin/ros-lsp"),
+          "basedpyright-langserver",
+          "--stdio",
+        },
         settings = {
           basedpyright = {
             analysis = {
