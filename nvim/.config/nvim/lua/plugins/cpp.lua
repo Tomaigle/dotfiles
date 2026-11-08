@@ -52,6 +52,13 @@ return {
         map("<leader>cd", "<cmd>CMakeDebug<cr>", "CMake: Debug Target")
         map("<leader>cv", "<cmd>CMakeSelectBuildTarget<cr>", "CMake: Select Target")
         map("<leader>ct", "<cmd>CMakeSelectBuildType<cr>", "CMake: Select Build Type")
+        map("<leader>ck", function()
+          vim.ui.input({ prompt = "Launch args: " }, function(input)
+            if input and input ~= "" then
+              vim.cmd("CMakeLaunchArgs " .. input)
+            end
+          end)
+        end, "CMake: Launch Args")
       end,
     })
   end,
