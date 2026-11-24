@@ -12,10 +12,6 @@ return {
       },
     },
     formatters_by_ft = {
-      php = { "php_cs_fixer" },
-      css = { "prettier" },
-      html = { "prettier" },
-      javascript = { "prettier" },
       tex = { "tex-fmt" },
     },
   },

@@ -2,10 +2,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     opts = function()
-      require("dap").defaults.fallback.terminal = {
-        command = "split",
-        auto_insert = true,
-      }
+      require("dap").defaults.fallback.terminal_win_cmd = "belowright split new"
     end,
     keys = {
       {

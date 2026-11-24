@@ -1,26 +1,28 @@
+local runner_ft = { "python", "swift", "javascript", "sh", "c", "cpp", "rust" }
+
 return {
   "stevearc/overseer.nvim",
   keys = {
     {
-      "<leader>cr",
+      "<leader>cR",
       function()
-        local file = vim.fn.shellescape(vim.fn.expand("%"))
-        local file_no_ext = vim.fn.shellescape(vim.fn.expand("%:r"))
+        local file = vim.fn.shellescape(vim.fn.expand("%:p"))
+        local out = vim.fn.shellescape("/tmp/" .. vim.fn.expand("%:t:r"))
         local ft = vim.bo.filetype
-        local cmd = ""
 
-        if ft == "python" then
-          cmd = "python3 " .. file
-        elseif ft == "swift" then
-          cmd = "swift " .. file
-        elseif ft == "javascript" then
-          cmd = "node " .. file
-        elseif ft == "sh" then
-          cmd = "bash " .. file
-        elseif ft == "cpp" then
-          cmd = "g++ " .. file .. " -o " .. file_no_ext .. " && ./" .. file_no_ext
-        else
-          vim.notify("No run command defined for filetype: " .. ft, vim.log.levels.WARN, { title = "Runner" })
+        local cmds = {
+          python = "python3 -u " .. file,
+          swift = "swift " .. file,
+          javascript = "node " .. file,
+          sh = "bash " .. file,
+          c = "gcc " .. file .. " -o " .. out .. " && " .. out,
+          cpp = "g++ " .. file .. " -o " .. out .. " && " .. out,
+          rust = "rustc " .. file .. " -o " .. out .. " && " .. out,
+        }
+
+        local cmd = cmds[ft]
+        if not cmd then
+          vim.notify("No run command for: " .. ft, vim.log.levels.WARN, { title = "Runner" })
           return
         end
 
@@ -33,7 +35,8 @@ return {
         task:start()
         overseer.open({ enter = true, direction = "bottom" })
       end,
-      desc = "Run File in Terminal",
+      desc = "Run File (Overseer)",
+      ft = runner_ft,
     },
   },
 }

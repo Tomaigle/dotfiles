@@ -1,18 +1,17 @@
 return {
   {
     "nvim-neotest/neotest",
-    dependencies = {
-      "alfaix/neotest-gtest",
-    },
+    dependencies = { "alfaix/neotest-gtest" },
     opts = function(_, opts)
-      opts.adapters = {
+      opts.adapters = opts.adapters or {}
+      table.insert(
+        opts.adapters,
         require("neotest-gtest").setup({
-          filter_dir = function(name, rel_path, root)
+          filter_dir = function(name)
             return name ~= "build"
           end,
-        }),
-      }
-      return opts
+        })
+      )
     end,
   },
 }

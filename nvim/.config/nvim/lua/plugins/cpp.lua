@@ -1,6 +1,28 @@
+local cpp_ft = { "c", "cpp", "objc", "objcpp", "cmake" }
+
 return {
   "Civitasv/cmake-tools.nvim",
-  ft = { "c", "cpp", "objc", "objcpp", "h", "hpp", "cmake" },
+  ft = cpp_ft,
+  keys = {
+    { "<leader>cg", "<cmd>CMakeGenerate<cr>", desc = "CMake: Generate (Ninja)", ft = cpp_ft },
+    { "<leader>cb", "<cmd>CMakeBuild<cr>", desc = "CMake: Build Target", ft = cpp_ft },
+    { "<leader>cr", "<cmd>CMakeRun<cr>", desc = "CMake: Run Executable", ft = cpp_ft },
+    { "<leader>cd", "<cmd>CMakeDebug<cr>", desc = "CMake: Debug Target", ft = cpp_ft },
+    { "<leader>cv", "<cmd>CMakeSelectBuildTarget<cr>", desc = "CMake: Select Target", ft = cpp_ft },
+    { "<leader>ct", "<cmd>CMakeSelectBuildType<cr>", desc = "CMake: Select Build Type", ft = cpp_ft },
+    {
+      "<leader>ck",
+      function()
+        vim.ui.input({ prompt = "Launch args: " }, function(input)
+          if input and input ~= "" then
+            vim.cmd("CMakeLaunchArgs " .. input)
+          end
+        end)
+      end,
+      desc = "CMake: Launch Args",
+      ft = cpp_ft,
+    },
+  },
   opts = {
     cmake_command = "cmake",
     cmake_build_directory = "build",
@@ -22,7 +44,7 @@ return {
     cmake_executor = {
       name = "overseer",
       opts = {
-        on_new_task = function(task)
+        on_new_task = function()
           require("overseer").open({ enter = false, direction = "bottom" })
         end,
       },
@@ -30,36 +52,10 @@ return {
     cmake_runner = {
       name = "overseer",
       opts = {
-        on_new_task = function(task)
+        on_new_task = function()
           require("overseer").open({ enter = false, direction = "bottom" })
         end,
       },
     },
   },
-  config = function(_, opts)
-    require("cmake-tools").setup(opts)
-
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "c", "cpp", "objc", "objcpp", "h", "hpp", "cmake" },
-      callback = function(event)
-        local function map(lhs, rhs, desc)
-          vim.keymap.set("n", lhs, rhs, { buffer = event.buf, desc = desc })
-        end
-
-        map("<leader>cg", "<cmd>CMakeGenerate<cr>", "CMake: Generate (Ninja)")
-        map("<leader>cb", "<cmd>CMakeBuild<cr>", "CMake: Build Target")
-        map("<leader>cr", "<cmd>CMakeRun<cr>", "CMake: Run Executable")
-        map("<leader>cd", "<cmd>CMakeDebug<cr>", "CMake: Debug Target")
-        map("<leader>cv", "<cmd>CMakeSelectBuildTarget<cr>", "CMake: Select Target")
-        map("<leader>ct", "<cmd>CMakeSelectBuildType<cr>", "CMake: Select Build Type")
-        map("<leader>ck", function()
-          vim.ui.input({ prompt = "Launch args: " }, function(input)
-            if input and input ~= "" then
-              vim.cmd("CMakeLaunchArgs " .. input)
-            end
-          end)
-        end, "CMake: Launch Args")
-      end,
-    })
-  end,
 }
