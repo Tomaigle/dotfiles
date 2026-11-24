@@ -16,6 +16,7 @@ return {
       css = { "prettier" },
       html = { "prettier" },
       javascript = { "prettier" },
+      tex = { "tex-fmt" },
     },
   },
 }
