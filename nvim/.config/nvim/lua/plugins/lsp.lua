@@ -1,4 +1,13 @@
 local wrap = vim.fn.expand("~/.local/bin/ros-lsp")
+local in_ros = vim.env.ROS_DISTRO ~= nil
+local use_wrap = (not in_ros) and (vim.fn.executable(wrap) == 1)
+
+local function cmd(base)
+  if use_wrap then
+    return vim.list_extend({ wrap }, base)
+  end
+  return base
+end
 
 return {
   "neovim/nvim-lspconfig",
@@ -6,8 +15,7 @@ return {
     servers = {
       clangd = {
         mason = false,
-        cmd = {
-          wrap,
+        cmd = cmd({
           "clangd",
           "--background-index",
           "--clang-tidy",
@@ -15,44 +23,11 @@ return {
           "--completion-style=detailed",
           "--function-arg-placeholders",
           "--fallback-style=llvm",
-        },
-        keys = {
-          {
-            "<leader>ch",
-            function()
-              local f = vim.fn.expand("%:p")
-              local ext = f:match("%.(%w+)$")
-              local base = f:gsub("%.%w+$", "")
-
-              local src_ext = { "cpp", "cc", "cxx", "c" }
-              local hdr_ext = { "h", "hpp", "hh", "hxx" }
-
-              local is_hdr = vim.tbl_contains(hdr_ext, ext)
-              local from_dir, to_dir = "/include/", "/src/"
-              if not is_hdr then
-                from_dir, to_dir = to_dir, from_dir
-              end
-              local exts = is_hdr and src_ext or hdr_ext
-
-              local bases = { base:gsub(from_dir, to_dir), base }
-              for _, b in ipairs(bases) do
-                for _, e in ipairs(exts) do
-                  local alt = b .. "." .. e
-                  if vim.uv.fs_stat(alt) then
-                    vim.cmd.edit(alt)
-                    return
-                  end
-                end
-              end
-              vim.notify("No counterpart found for " .. vim.fn.expand("%:t"))
-            end,
-            desc = "Switch Source/Header (C/C++)",
-          },
-        },
+        }),
       },
       basedpyright = {
         mason = false,
-        cmd = { wrap, "basedpyright-langserver", "--stdio" },
+        cmd = cmd({ "basedpyright-langserver", "--stdio" }),
         settings = {
           basedpyright = {
             analysis = {

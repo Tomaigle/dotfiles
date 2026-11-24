@@ -4,3 +4,13 @@
 
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.opt.spelllang = { "en", "pl" }
+
+vim.filetype.add({
+  extension = {
+    urdf = "xml",
+    xacro = "xml",
+    sdf = "xml",
+    launch = "xml",
+    repos = "yaml",
+  },
+})
