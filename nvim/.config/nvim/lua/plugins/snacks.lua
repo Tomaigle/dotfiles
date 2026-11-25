@@ -2,7 +2,7 @@ return {
   "folke/snacks.nvim",
   opts = {
     terminal = {
-      shell = "fish",
+      shell = vim.fn.executable("fish") == 1 and "fish" or "bash",
     },
     picker = {
       sources = {
