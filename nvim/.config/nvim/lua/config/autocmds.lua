@@ -13,11 +13,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("i", "$", function()
       local line = vim.api.nvim_get_current_line()
       local col = vim.api.nvim_win_get_cursor(0)[2]
-      -- Don't pair escaped \$
       if line:sub(col, col) == "\\" then
         return "$"
       end
+      if line:sub(col + 1, col + 1) == "$" then
+        return "<Right>"
+      end
       return "$$<Left>"
-    end, { buffer = true, expr = true })
+    end, { buffer = true, expr = true, desc = "Pair $" })
   end,
 })

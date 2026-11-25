@@ -4,19 +4,19 @@ return {
   "stevearc/overseer.nvim",
   keys = {
     {
-      "<leader>cR",
+      "<leader>cj",
       function()
         local file = vim.fn.shellescape(vim.fn.expand("%:p"))
         local out = vim.fn.shellescape("/tmp/" .. vim.fn.expand("%:t:r"))
         local ft = vim.bo.filetype
 
         local cmds = {
-          python = "python3 -u " .. file,
+          python = (vim.env.VIRTUAL_ENV and (vim.env.VIRTUAL_ENV .. "/bin/python") or "python3") .. " -u " .. file,
           swift = "swift " .. file,
           javascript = "node " .. file,
           sh = "bash " .. file,
-          c = "gcc " .. file .. " -o " .. out .. " && " .. out,
-          cpp = "g++ " .. file .. " -o " .. out .. " && " .. out,
+          c = "gcc -g -Wall -Wextra " .. file .. " -o " .. out .. " && " .. out,
+          cpp = "g++ -std=c++20 -g -Wall -Wextra " .. file .. " -o " .. out .. " && " .. out,
           rust = "rustc " .. file .. " -o " .. out .. " && " .. out,
         }
 

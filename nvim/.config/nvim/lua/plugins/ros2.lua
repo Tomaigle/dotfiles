@@ -16,7 +16,9 @@ local function current_pkg()
   return pkg_dir and vim.fs.basename(pkg_dir) or nil
 end
 
-local function run_colcon(name, cmd)
+local merge = " && jq -s 'add' build/*/compile_commands.json > compile_commands.json"
+
+local function run_colcon(name, cmd, restart_lsp)
   local overseer = require("overseer")
   local task = overseer.new_task({
     name = name,
@@ -24,6 +26,15 @@ local function run_colcon(name, cmd)
     cwd = ws_root(),
     components = { "default" },
   })
+  if restart_lsp then
+    task:subscribe("on_complete", function(_, status)
+      if status == "SUCCESS" then
+        vim.schedule(function()
+          vim.cmd("LspRestart")
+        end)
+      end
+    end)
+  end
   task:start()
   overseer.open({ enter = false, direction = "bottom" })
 end
@@ -104,7 +115,8 @@ return {
         function()
           run_colcon(
             "Colcon Build (All)",
-            "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+            "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON" .. merge,
+            true
           )
         end,
         desc = "ROS2: Colcon Build All",
@@ -121,6 +133,8 @@ return {
             "colcon build --symlink-install --packages-up-to "
               .. vim.fn.shellescape(pkg)
               .. " --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+              .. merge,
+            true
           )
         end,
         desc = "ROS2: Colcon Build Package",
@@ -140,5 +154,9 @@ return {
         desc = "ROS2: Colcon Test Package",
       },
     },
+  },
+  {
+    "folke/which-key.nvim",
+    opts = { spec = { { "<leader>R", group = "ROS2" } } },
   },
 }
