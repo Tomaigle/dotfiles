@@ -44,6 +44,10 @@ return {
           },
         },
       },
+      html = {},
+      cssls = {},
+      emmet_language_server = {},
+      lemminx = {},
       ["*"] = {
         keys = {
           { "<leader>cr", false },

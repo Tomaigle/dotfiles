@@ -29,5 +29,33 @@ return {
       end,
       desc = "Resize split right",
     },
+    {
+      "<C-h>",
+      function()
+        require("smart-splits").move_cursor_left()
+      end,
+      desc = "Go to left split",
+    },
+    {
+      "<C-j>",
+      function()
+        require("smart-splits").move_cursor_down()
+      end,
+      desc = "Go to lower split",
+    },
+    {
+      "<C-k>",
+      function()
+        require("smart-splits").move_cursor_up()
+      end,
+      desc = "Go to upper split",
+    },
+    {
+      "<C-l>",
+      function()
+        require("smart-splits").move_cursor_right()
+      end,
+      desc = "Go to right split",
+    },
   },
 }
